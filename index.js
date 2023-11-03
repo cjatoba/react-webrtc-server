@@ -45,4 +45,10 @@ io.on("connection", (socket) => {
     );
     io.to(to).emit("peer:nego:final", { from: socket.id, ans });
   });
+
+  socket.on("user:exit", ({ to }) => {
+    console.log(`User ${socketIdToEmailMap.get(socket.id)} exited room ${to}`);
+    io.to(to).emit("user:exit");
+    socket.leave(to);
+  });
 });
